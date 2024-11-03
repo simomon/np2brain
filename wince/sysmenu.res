@@ -43,15 +43,21 @@ enum {
 	MID_15FPS,
 	MID_SCREENOPT,
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 	MID_CURDEF,
 	MID_CUR1,
 	MID_CUR2,
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 	MID_BTNDEF,
 	MID_BTN1,
 	MID_BTN2,
 #endif
-
+#if defined(BRAIN)
+	MID_QWERTYDEF,
+	MID_QWERTY1,
+	MID_QWERTY2,
+#endif
 	MID_KEY,
 	MID_JOY1,
 	MID_JOY2,

@@ -33,15 +33,20 @@ static const OEMCHAR str_scropt[] = OEMTEXT("Screen option...");
 
 static const OEMCHAR str_device[] = OEMTEXT("Device");
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 static const OEMCHAR str_cursor[] = OEMTEXT("Cursor");
 static const OEMCHAR str_default[] = OEMTEXT("Default");
 static const OEMCHAR str_cur2[] = OEMTEXT("Tenkey");
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 static const OEMCHAR str_botton[] = OEMTEXT("Button");
 static const OEMCHAR str_btn1[] = OEMTEXT("RET/SPACE");
 static const OEMCHAR str_btn2[] = OEMTEXT("Z / X");
 #endif
-
+#if defined(BRAIN)
+static const OEMCHAR str_qwerty[] = OEMTEXT("Q~P key");
+static const OEMCHAR str_qwerty2[] = OEMTEXT("1~0 key");
+#endif
 static const OEMCHAR str_keyboard[] = OEMTEXT("Keyboard");
 static const OEMCHAR str_joykey1[] = OEMTEXT("JoyKey-1");
 static const OEMCHAR str_joykey2[] = OEMTEXT("JoyKey-2");
@@ -191,18 +196,24 @@ static const MSYSITEM s_screen[] = {
 		{NULL,				NULL,		MID_STATIC,			MENU_SEPARATOR},
 		{str_scropt,		NULL,		MID_SCREENOPT,		MENU_DELETED}};
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 static const MSYSITEM s_bindcur[] = {
 		{str_default,		NULL,		MID_CURDEF,			0},
 		{str_cursor,		NULL,		MID_CUR1,			0},
 		{str_cur2,			NULL,		MID_CUR2,			MENU_DELETED}};
-
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 static const MSYSITEM s_bindbtn[] = {
 		{str_default,		NULL,		MID_BTNDEF,			0},
 		{str_btn1,			NULL,		MID_BTN1,			0},
 		{str_btn2,			NULL,		MID_BTN2,			MENU_DELETED}};
 #endif
-
+#if defined(BRAIN)
+static const MSYSITEM s_bindqwerty[] = {
+		{str_default,		NULL,		MID_QWERTYDEF,			0},
+		{str_qwerty,		NULL,		MID_QWERTY1,			0},
+		{str_qwerty2,		NULL,		MID_QWERTY2,			MENU_DELETED}};
+#endif
 static const MSYSITEM s_keybd[] = {
 		{str_keyboard,		NULL,		MID_KEY,			0},
 		{str_joykey1,		NULL,		MID_JOY1,			0},
@@ -252,9 +263,16 @@ static const MSYSITEM s_mem[] = {
 		{str_mem76,			NULL,		MID_MEM76,			MENU_DELETED}};
 
 static const MSYSITEM s_device[] = {
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 		{str_cursor,		s_bindcur,	MID_STATIC,			0},
+#endif
+#if defined(BRAIN)
+		{str_qwerty,		s_bindqwerty,	MID_STATIC,			0},
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 		{str_botton,		s_bindbtn,	MID_STATIC,			0},
+#endif
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 		{NULL,				NULL,		MID_STATIC,			MENU_SEPARATOR},
 #endif
 		{str_keyboard,		s_keybd,	MID_STATIC,			0},

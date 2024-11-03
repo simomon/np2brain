@@ -1,5 +1,5 @@
 #include	"compiler.h"
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 #include	<gx.h>
 #endif
 #include	"np2.h"
@@ -9,7 +9,7 @@
 
 #define		NC		0xff
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 static UINT8 key106[256] =
 #else
 static const UINT8 key106[256] =
@@ -79,7 +79,7 @@ static const UINT8 key106[256] =
 			//	    ,    ,    ,    ,    ,    ,    ,    		; 0xf8
 				  NC,  NC,  NC,  NC,  NC,  NC,  NC,  NC};
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 static UINT8 key106ext[256] =
 #else
 static const UINT8 key106ext[256] =
@@ -179,14 +179,18 @@ void winkbd_keydown(WPARAM wParam, LPARAM lParam) {
 	if (data != NC) {
 		if ((!(lParam & 0x01000000)) &&
 				(key106ext[wParam & 0xff] != NC)) {			// ver0.28
+#if !defined(BRAIN)
 			keystat_senddata(0x70);							// PC/AT only!
 			data = key106ext[wParam & 0xff];
+#endif
 		}
 		keystat_senddata(data);
 	}
 	else {													// ver0.28
 		if (wParam == 0x0c) {
+#if !defined(BRAIN)
 			keystat_senddata(0x70);							// PC/AT only
+#endif
 			keystat_senddata(0x47);
 		}
 	}
@@ -205,14 +209,18 @@ void winkbd_keyup(WPARAM wParam, LPARAM lParam) {
 	if (data != NC) {
 		if ((!(lParam & 0x01000000)) &&
 				(key106ext[wParam & 0xff] != NC)) {		// ver0.28
+#if !defined(BRAIN)
 			keystat_senddata(0x70 | 0x80);				// PC/AT only
 			data = key106ext[wParam & 0xff];
+#endif
 		}
 		keystat_senddata((UINT8)(data | 0x80));
 	}
 	else {												// ver0.28
 		if (wParam == 0x0c) {
+#if !defined(BRAIN)
 			keystat_senddata(0x70 | 0x80);				// PC/AT only
+#endif
 			keystat_senddata(0x47 | 0x80);
 		}
 	}
@@ -230,7 +238,7 @@ void winkbd_resetf12(void) {
 
 // ---- PocketPC keys
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 
 extern	GXKeyList	gx_keylist;
 
@@ -300,9 +308,15 @@ void winkbd_bindinit(void) {
 	getbind(&ppcbtndef.cur, key106ext, &ppcbtntbl.curadrs);
 	getbind(&ppcbtndef.btn, key106, &ppcbtntbl.btnadrs);
 }
+#if defined(BRAIN)
+static const UINT8 brain_curid[4] = {0x25,0x26,0x27,0x28};//key id
+static const UINT8 brain_cursor[4] = {0x3b,0x3a,0x3c,0x3d};//Å©,Å™,Å®,Å´
+static const UINT8 brain_tenkey[4] = {0x46,0x43,0x48,0x4b};//4,8,6,2
+#endif
 
 void winkbd_bindcur(UINT type) {
 
+#if defined(WIN32_PLATFORM_PSPC)
 const KEYSET	*bind;
 
 	switch(type) {
@@ -320,7 +334,63 @@ const KEYSET	*bind;
 			break;
 	}
 	setbind(key106ext, bind, &ppcbtntbl.curadrs);
+#endif
+
+#if defined(BRAIN)
+	int i;
+	switch(type) {
+		case 0:
+		default:
+			for (i=0; i<4; i++) {
+				key106[brain_curid[i]] = brain_cursor[i];
+			}
+			break;
+
+		case 1:
+			for (i=0; i<4; i++) {
+				key106[brain_curid[i]] = brain_cursor[i];
+			}
+			break;
+
+		case 2:
+			for (i=0; i<4; i++) {
+				key106[brain_curid[i]] = brain_tenkey[i];
+			}
+			break;
+	}
+#endif
+
 }
+
+#if defined(BRAIN)
+static const UINT8 brain_qwertyid[12] = {0x51,0x57,0x45,0x52,0x54,0x59,0x55,0x49,0x4f,0x50};//key id
+static const UINT8 brain_qwerty[12] = {0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x17,0x18,0x19};//Q,W,E,R,T,Y,U,I,O,P
+static const UINT8 brain_num[12] = {0x01,0x02,0x03,0x04,0x05,0x06,0x07,0x08,0x09,0x0a};//1,2,3,4,5,6,7,8,9,0
+
+void winkbd_bindqwerty(UINT type) {
+	int i;
+	switch(type) {
+		case 0:
+		default:
+			for (i=0; i<12; i++) {
+				key106[brain_qwertyid[i]] = brain_qwerty[i];
+			}
+			break;
+
+		case 1:
+			for (i=0; i<12; i++) {
+				key106[brain_qwertyid[i]] = brain_qwerty[i];
+			}
+			break;
+
+		case 2:
+			for (i=0; i<12; i++) {
+				key106[brain_qwertyid[i]] = brain_num[i];
+			}
+			break;
+	}
+}
+#endif
 
 void winkbd_bindbtn(UINT type) {
 

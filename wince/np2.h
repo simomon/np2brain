@@ -9,11 +9,15 @@ typedef struct {
 	int		winx;
 	int		winy;
 #endif
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 	UINT8	bindcur;
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 	UINT8	bindbtn;
 #endif
-
+#if defined(BRAIN)
+	UINT8	bindqwerty;
+#endif
 	UINT8	jastsnd;
 } NP2OSCFG;
 

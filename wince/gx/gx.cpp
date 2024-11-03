@@ -100,11 +100,13 @@ static void gx_init(void) {
 	dp.cxWidth = WINDOW_WIDTH;
 	dp.cyHeight = WINDOW_HEIGHT;
 	if ((x > WINDOW_WIDTH) && (y > WINDOW_HEIGHT)) {
+#if !defined(BRAIN_FULLSCREEN)
 		GXFlag |= GX_WINDOW;
 		x = WINDOW_WIDTH;
 		y = WINDOW_HEIGHT;
 		sx = 0;
 		sy = 0;
+#endif
 	}
 	else if ((x >= WINDOW_WIDTH) && (y >= WINDOW_HEIGHT)) {
 		sx = (x - WINDOW_WIDTH) / 2;

@@ -379,10 +379,16 @@ static const PFTBL iniitem[] = {
 	PFVAL("WindposX", PFTYPE_SINT32,	&np2oscfg.winx),
 	PFVAL("WindposY", PFTYPE_SINT32,	&np2oscfg.winy),
 #endif
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 	PFVAL("pbindcur", PFTYPE_UINT8,		&np2oscfg.bindcur),
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 	PFVAL("pbindbtn", PFTYPE_UINT8,		&np2oscfg.bindbtn),
 #endif
+#if defined(BRAIN)
+	PFVAL("pbindqwerty", PFTYPE_UINT8,		&np2oscfg.bindqwerty),
+#endif
+
 	PFVAL("jast_snd", PFTYPE_BOOL,		&np2oscfg.jastsnd),
 };
 

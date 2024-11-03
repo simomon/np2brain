@@ -45,7 +45,7 @@ static const TCHAR szClassName[] = _T("NP2-MainWindow");
 #if !defined(GX_DLL)
 								CW_USEDEFAULT, CW_USEDEFAULT,
 #endif
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 								0, 0,
 #endif
 								0};
@@ -430,9 +430,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPreInst,
 	pccore_reset();
 	scrndraw_redraw();
 
-#if defined(WIN32_PLATFORM_PSPC)
+#if defined(WIN32_PLATFORM_PSPC) || defined(BRAIN)
 	winkbd_bindcur(np2oscfg.bindcur);
+#endif
+#if defined(WIN32_PLATFORM_PSPC)
 	winkbd_bindbtn(np2oscfg.bindbtn);
+#endif
+#if defined(BRAIN)
+	winkbd_bindqwerty(np2oscfg.bindqwerty);
 #endif
 
 	sysrunning |= SYSRUNNING_MAIN | SYSRUNNING_FORE;
