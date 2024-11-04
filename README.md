@@ -15,6 +15,7 @@ np2brain is a port for "SHARP Brain" of "Neko Project II" PC-9801 emulator.
   - SDKのインストールは[Brain wiki](https://brain.fandom.com/ja/wiki/Microsoft_eMbedded_Visual_C%2B%2B_4.0)に詳しい記載があります
 - ビルド手順
   - eVC4よりワークスペース（wince/np2brain.vcw）を開き、ビルド実行
+- ビルド済みの実行ファイルを[Release](https://github.com/simomon/np2brain/releases)に置いています
 
 ## 使用方法
 - Brainへのインストールは[Brain wiki エミュレータ Neko Project II](https://brain.fandom.com/ja/wiki/Neko_Project_II)を参照ください
