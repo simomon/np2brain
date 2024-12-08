@@ -16,6 +16,12 @@ np2brain is a port for "SHARP Brain" of "Neko Project II" PC-9801 emulator.
 - ビルド手順
   - eVC4よりワークスペース（wince/np2brain.vcw）を開き、ビルド実行
 - ビルド済みの実行ファイルを[Release](https://github.com/simomon/np2brain/releases)に置いています
+  - np2brainw-rev1.zip（通常版）
+  - np2brainw-rev1_softkbd.zip（ソフトキーボード有効化版）※2024.12.9追記
+    - np2本家でPPC向けにソフトキーボードが実装されているため、それを有効化したもの
+    - 右下にソフトキーボードが表示されます。メニューは左下の猫アイコンをタッチすることで表示
+    - オプションメニューでSHIFTキー、CTRLキー、GRAPHキーのロックをで有効にできるため、ソフトキーボードでSHIFT、CTRL、GRAPHと他のキーを同時押しするケースではこれを活用してください
+      （Device → Keybord → mechanical SHIFT,mechanical CTRL,mechanical GRAPH）
 
 ## 使用方法
 - Brainへのインストールは[Brain wiki エミュレータ Neko Project II](https://brain.fandom.com/ja/wiki/Neko_Project_II)を参照ください
